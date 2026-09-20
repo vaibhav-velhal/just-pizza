@@ -6,6 +6,7 @@ import './Login.css';
 
 function Login() {
     
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ function Login() {
     // Handle login
     const handleLogin = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
 
         try {
             const res = await loginUser(email, password);
@@ -26,7 +28,8 @@ function Login() {
                 setEmail("");
                 setPassword("");
                 setShowPassword(false);
-
+                setIsLoading(false);
+                
                 alert("Login successful");
                 navigate("/");
             }else{
@@ -39,6 +42,8 @@ function Login() {
                 alert(error.message || "Login failed");
                 console.error("Login failed:", error);
             }
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -107,8 +112,18 @@ function Login() {
                                     </div>
                                 </div>
 
-                                <button className="btn text-light my-3 w-100" type="submit">
-                                    Login
+                                <button className="btn text-light my-3 w-100" type="submit" disabled={isLoading}>
+                                    {isLoading ? (
+                                        <>
+                                            <span
+                                                className="spinner-border spinner-border-sm"
+                                                role="status"
+                                                aria-hidden="true"
+                                            ></span>
+                                        </>
+                                    ) : (
+                                        'Login'
+                                    )}
                                 </button>
 
                                 <div className="desc text-center">                                    

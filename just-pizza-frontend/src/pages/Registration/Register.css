@@ -19,6 +19,11 @@
     background-color: #c9221d;
 }
 
+.registration-page .btn:disabled {
+    background-color: #df2620;
+    opacity: 0.65;
+}
+
 .registration-container .desc a {
     color: #df2620;
     text-decoration: none;

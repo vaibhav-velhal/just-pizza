@@ -7,6 +7,7 @@ import "./Register.css";
 
 function Register() {
 
+    const [isLoading, setIsLoading] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phone, setPhone] = useState("");
@@ -20,6 +21,7 @@ function Register() {
     // Handle Registration
     const handleRegistration = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
 
         const userData = {
             firstName,
@@ -41,6 +43,7 @@ function Register() {
             setPassword("");
 
             setShowPassword(false);
+            setIsLoading(false);
 
             if(res.msg === "User has inserted successfully!") {
                 navigate("/login");
@@ -52,6 +55,8 @@ function Register() {
                 alert(error.message || "Registration failed");
             }
             console.error("Registration failed:", error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -169,7 +174,19 @@ function Register() {
                                     </div>
                                 </div>
 
-                                <button className="btn text-light my-3 w-100" type="submit">Register</button>
+                                <button className="btn text-light my-3 w-100" type="submit" disabled={isLoading}>
+                                    {isLoading ? (
+                                        <>
+                                            <span
+                                                className="spinner-border spinner-border-sm"
+                                                role="status"
+                                                aria-hidden="true"
+                                            ></span>
+                                        </>
+                                    ) : (
+                                        'Register'
+                                    )}
+                                </button>
 
                                 <div className="desc text-center">
                                     <p className="m-0">Already have an account? <Link to="/login" className="fw-semibold">Login here</Link></p>

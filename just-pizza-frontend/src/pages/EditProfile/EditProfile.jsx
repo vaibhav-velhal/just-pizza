@@ -14,6 +14,7 @@ function EditProfile() {
     const token = JSON.parse(localStorage.getItem("token"));
     const userId = localStorage.getItem("userId");
 
+    const [isLoading, setIsLoading] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phone, setPhone] = useState("");
@@ -49,6 +50,7 @@ function EditProfile() {
     // Handle Edit user
     const handleUserEdit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         
         if ((newPassword || confirmPassword) && newPassword !== confirmPassword) {
             alert("Passwords do not match");
@@ -68,6 +70,7 @@ function EditProfile() {
             
             setShowNewPassword(false);
             setShowConfirmPassword(false);
+            setIsLoading(false);
 
             if(res.msg === "User has updated successfully!") {
                 alert(res.msg);
@@ -80,6 +83,8 @@ function EditProfile() {
                 alert(error.message || "Update failed");
             }
             console.error("Update failed:", error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -257,7 +262,19 @@ function EditProfile() {
                                                     
                                                     <div className="button-section text-end">
                                                         <button className="btn btn-outline-secondary me-2" type="button" onClick={handleCancelBtn}>Cancel</button>
-                                                        <button className="btn btn-danger my-3" type="submit">Save changes</button>
+                                                        <button className="btn btn-danger my-3" type="submit">
+                                                            {isLoading ? (
+                                                                <>
+                                                                <span
+                                                                    className="spinner-border spinner-border-sm"
+                                                                    role="status"
+                                                                    aria-hidden="true"
+                                                                ></span>
+                                                                </>
+                                                            ) : (
+                                                                'Save changes'
+                                                            )}
+                                                        </button>
                                                     </div>
                                                 </form>
                                             </div>

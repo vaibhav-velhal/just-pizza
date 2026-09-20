@@ -20,6 +20,11 @@
     background-color: #c9221d;
 }
 
+.login-page .btn:disabled {
+    background-color: #df2620;
+    opacity: 0.65;
+}
+
 .login-container .desc a {
     color: #df2620;
     text-decoration: none;
