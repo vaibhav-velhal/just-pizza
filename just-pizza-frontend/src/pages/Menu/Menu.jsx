@@ -122,14 +122,19 @@ function Menu() {
                     filteredMenu.map((item, index) => {
                       return(
                         <div className="col-6 col-md-3 mb-4" key={index}>
-                          <div className="card shadow-sm border border-opacity-10 rounded-3">
-                            <div className="card-body p-0">
+                          <div className="card h-100 shadow-sm border border-opacity-10 rounded-3">
+                            <div className="card-body d-flex flex-column justify-content-between p-0">
                               <div className="image-container rounded-top-3">
                                 <img src={item.image} alt={item.name} />
                               </div>
-                              <div className="pizza-desc p-3">
-                                <p className="fw-semibold mb-1">{item.name}</p>
-                                <p className="fw-semibold m-0" style={{color: "#df2620"}}>{"\u20B9"} {item.price}</p>
+                              <div className="pizza-content d-flex justify-content-between align-items-end p-3">
+                                <div className="pizza-desc">
+                                  <p className="fw-semibold mb-1">{item.name}</p>
+                                  <p className="fw-semibold m-0" style={{color: "#df2620"}}>{"\u20B9"} {item.price}</p>
+                                </div>
+                                <div className="add-to-cart-button">
+                                  <button className="add-to-cart-btn btn btn-sm btn-danger" type="button" disabled>{"\u002B"}</button>
+                                </div>
                               </div>
                             </div>
                           </div>
