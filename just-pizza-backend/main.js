@@ -8,6 +8,7 @@ const middleware = require("./middleware.js");
 const authRoutes = require("./modules/auth/auth.routes.js");
 const userRoutes = require("./modules/users/user.routes.js");
 const categoryRoutes = require("./modules/categories/category.routes.js");
+const productRoutes = require("./modules/products/product.routes.js");
 
 
 app.use(express.json());
@@ -25,6 +26,8 @@ router.use("/api/user", middleware.auth, userRoutes);
 // Category route
 router.use("/api/category", categoryRoutes);
 
+// Product route
+router.use("/api/product", productRoutes);
 
 
 // Response middleware
