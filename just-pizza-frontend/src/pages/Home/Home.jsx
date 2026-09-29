@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { getAllProducts } from "../../services/product/product.api";
 import { useEffect, useState } from "react";
 import { qualitiesSection } from "../../data/qualitiesSection";
-// import { menuList } from "./../../data/menuList"
 import { customersReview } from "../../data/customersReview";
 import { instagramSection } from "../../data/instagramSection";
 import { FaStar } from "react-icons/fa";
