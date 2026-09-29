@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { getAllProducts } from "../../services/product/product.api";
+import { useEffect, useState } from "react";
 import { qualitiesSection } from "../../data/qualitiesSection";
-import { menuList } from "./../../data/menuList"
+// import { menuList } from "./../../data/menuList"
 import { customersReview } from "../../data/customersReview";
 import { instagramSection } from "../../data/instagramSection";
 import { FaStar } from "react-icons/fa";
@@ -8,6 +10,22 @@ import { IoLogoInstagram } from "react-icons/io5";
 import "./Home.css";
 
 function Home() {
+
+    const [productData, setProductData] = useState([]);
+
+    useEffect(() => {
+        const getAllProductsData = async () => {
+            try {
+                const res = await getAllProducts();
+                
+                setProductData(res);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        getAllProductsData();
+    }, [])
 
     return(
         <>
@@ -57,9 +75,9 @@ function Home() {
                         
                         <div className="row row-cols-2 px-2 px-lg-0">
                             {
-                                menuList.slice(0, 6).map((item, index) => {
+                                productData.slice(0, 6).map((item) => {
                                     return(
-                                        <div className="col-6 col-lg-2 mb-4 mb-md-0" key={index}>
+                                        <div className="col-6 col-lg-2 mb-4 mb-md-0" key={item._id}>
                                             <div className="card h-100 shadow-sm border border-opacity-10 rounded-3">
                                                 <div className="card-body d-flex flex-column justify-content-between p-0">
                                                     <div className="image-container rounded-top-3">
