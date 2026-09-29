@@ -1,4 +1,5 @@
 import { useNavigate, NavLink } from "react-router-dom";
+import { BsCart3 } from "react-icons/bs";
 import "./Navbar.css";
 
 function Navbar() {
@@ -18,22 +19,8 @@ function Navbar() {
         }
     };
 
-    const authButton = token ? (
-                                    <button
-                                        className="btn btn-outline-dark rounded-pill px-3 py-1"
-                                        type="button"
-                                        onClick={handleLogout}
-                                    >
-                                        Logout
-                                    </button>
-                                ) : (
-                                    <NavLink
-                                        className="btn btn-outline-dark rounded-pill px-3 py-1"
-                                        to="/login"
-                                    >
-                                        Login
-                                    </NavLink>
-                                );
+    const cartBtn = <NavLink to="/cart" aria-label="Cart"><BsCart3 className="text-dark" size={24} /></NavLink>
+
 
     return (
         <nav className="navbar navbar-expand-lg">
@@ -66,19 +53,39 @@ function Navbar() {
                             <NavLink to="/about">About</NavLink>
                         </li>
                     </ul>
-                    <ul className="navbar-nav align-items-lg-center my-2 my-lg-0 gap-1 gap-md-4">
+                    <ul className="navbar-nav align-items-lg-center my-2 my-lg-0 gap-1 gap-md-3">
+                        <li className="nav-item fw-semibold d-none d-lg-block">
+                            {cartBtn}
+                        </li>
                         <li className="nav-item fw-semibold">
                             <NavLink to={`/account/${userId}`} className="account-btn px-3 py-2 text-light fw-semibold rounded-2">Account</NavLink>
                         </li>
                         <li className="nav-item">
-                            <div className="auth-btn d-none d-lg-block">
-                                {authButton}
+                            <div className="auth-btn">
+                                {
+                                    token ? (
+                                        <button
+                                            className="btn btn-outline-dark rounded-pill px-3 py-1"
+                                            type="button"
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </button>
+                                    ) : (
+                                        <NavLink
+                                            className="btn btn-outline-dark rounded-pill px-3 py-1"
+                                            to="/login"
+                                        >
+                                            Login
+                                        </NavLink>
+                                    )
+                                }
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div className="d-lg-none">
-                    {authButton}
+                    {cartBtn}
                 </div>
             </div>
         </nav>

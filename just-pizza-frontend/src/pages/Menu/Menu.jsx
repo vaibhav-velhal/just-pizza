@@ -1,26 +1,36 @@
 import { useEffect, useState } from "react";
 import { getAllProducts } from "../../services/product/product.api";
 import { getAllCategories } from "../../services/category/category.api";
+import { addToCart } from "../../services/cart/cart.api";
 import { PiChefHatThin } from "react-icons/pi";
 
 function Menu() {
 
-  // const [sortType, setSortType] = useState("default");
-
-  // const sortedMenu = [...menuList].sort((a, b) => {
-  //   if(sortType === "low") {
-  //     return a.price - b.price;
-  //   }
-  //   if (sortType === "high") {
-  //     return b.price - a.price;
-  //   }
-  //   return 0; //default order
-  // });
+  const token = JSON.parse(localStorage.getItem("token"));
 
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const [productData, setProductData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
+
+
+  // handle add to cart
+  const handleAddToCart = async (productId) => {
+      if (!token) {
+          alert("Please login to add products to cart.");
+          return;
+      }
+
+      try {
+          const res = await addToCart(token, productId, 1);
+
+          alert(res.msg || "Product added to cart!");
+      } catch (error) {
+          console.error("Add to cart failed:", error);
+          alert(error.message || "Failed to add product to cart.");
+      }
+  };
+
 
   // Get all products
   useEffect(() => {
@@ -58,6 +68,8 @@ function Menu() {
         product.categoryIds.includes(selectedCategory)
     );
 
+
+
   return (
 
     <section>
@@ -72,19 +84,6 @@ function Menu() {
       <section>
         <div className="container-fluid px-lg-5 mt-4 mt-md-5 mb-5">
           <div className="row justify-content-center">
-            {/* <div className="col-12 col-md-3 mb-4 mb-lg-0">
-              <div className="card py-md-4 px-md-2 shadow-sm border border-opacity-10 rounded-4">
-                <div className="card-body">
-                  <div className="sort-box">
-                    <select onChange={(e) => setSortType(e.target.value)} className="form-select">
-                      <option value="default">Sort By</option>
-                      <option value="low">Price: Low to High</option>
-                      <option value="high">Price: High to Low</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div> */}
 
             <div className="col-10 col-md-2 mb-5 mb-lg-0">
               <div className="card shadow-sm border border-opacity-10 rounded-4">
@@ -135,7 +134,13 @@ function Menu() {
                                   <p className="fw-semibold m-0" style={{color: "#df2620"}}>{"\u20B9"} {item.price}</p>
                                 </div>
                                 <div className="add-to-cart-button">
-                                  <button className="add-to-cart-btn btn btn-sm btn-danger" type="button" disabled>{"\u002B"}</button>
+                                  <button
+                                      className="add-to-cart-btn btn btn-sm btn-danger"
+                                      type="button"
+                                      onClick={() => handleAddToCart(item._id)}
+                                  >
+                                      {"\u002B"}
+                                  </button>
                                 </div>
                               </div>
                             </div>
