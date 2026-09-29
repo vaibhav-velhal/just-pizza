@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { menuList } from "../../data/menuList";
+import { useEffect, useState } from "react";
+// import { menuList } from "../../data/menuList";
 import { PiChefHatThin } from "react-icons/pi";
+import { getAllProducts } from "../../services/product/product.api";
 
 function Menu() {
 
@@ -18,11 +19,27 @@ function Menu() {
 
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const filteredMenu = selectedCategory === "all"
-        ? menuList
-        : menuList.filter((item) =>
-            item.category.includes(selectedCategory)
-        );
+  const [productData, setProductData] = useState([]);
+
+  useEffect(() => {
+      const getAllProductsData = async () => {
+          try {
+              const res = await getAllProducts();
+              
+              setProductData(res);
+          } catch (error) {
+              console.error(error);
+          }
+      };
+
+      getAllProductsData();
+  }, [])
+
+  // const filteredMenu = selectedCategory === "all"
+  //       ? menuList
+  //       : menuList.filter((item) =>
+  //           item.category.includes(selectedCategory)
+  //       );
 
   return (
 
@@ -118,7 +135,7 @@ function Menu() {
             <div className="col-12 col-md-10">
               <div className="container menu-section">
                 <div className="row">
-                  {
+                  {/* {
                     filteredMenu.map((item, index) => {
                       return(
                         <div className="col-6 col-md-3 mb-4" key={index}>
@@ -141,7 +158,32 @@ function Menu() {
                         </div>
                       )
                     })
+                  } */}
+                  {
+                    productData.map((item) => {
+                      return(
+                        <div className="col-6 col-md-3 mb-4" key={item._id}>
+                          <div className="card h-100 shadow-sm border border-opacity-10 rounded-3">
+                            <div className="card-body d-flex flex-column justify-content-between p-0">
+                              <div className="image-container rounded-top-3">
+                                <img src={item.image} alt={item.name} />
+                              </div>
+                              <div className="pizza-content d-flex justify-content-between align-items-end p-3">
+                                <div className="pizza-desc">
+                                  <p className="fw-semibold mb-1">{item.name}</p>
+                                  <p className="fw-semibold m-0" style={{color: "#df2620"}}>{"\u20B9"} {item.price}</p>
+                                </div>
+                                <div className="add-to-cart-button">
+                                  <button className="add-to-cart-btn btn btn-sm btn-danger" type="button" disabled>{"\u002B"}</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })
                   }
+                  
                 </div>
               </div>
             </div>
