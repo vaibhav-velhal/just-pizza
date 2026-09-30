@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { getOrderById } from "../../services/order/order.api";
 import { getAllProducts } from "../../services/product/product.api";
 import { PiChefHatThin } from "react-icons/pi";
+import { FaArrowLeft } from "react-icons/fa6";
 
 function OrderDetails() {
 
@@ -97,7 +98,7 @@ function OrderDetails() {
                         to="/orders"
                         className="btn btn-outline-danger"
                     >
-                        Back to My Orders
+                        <FaArrowLeft className="mb-1 me-2" />Back to My Orders
                     </Link>
 
                 </div>

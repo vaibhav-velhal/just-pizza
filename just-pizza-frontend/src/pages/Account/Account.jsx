@@ -65,9 +65,9 @@ function Account() {
         navigate(`/edit/${userId}`)
     }
 
-    // Handle Edit Button
+    // Handle MyOrders Button
     function handleMyOrdersBtn() {
-        navigate(`/edit/${userId}`)
+        navigate("/orders")
     }
 
     // Logout button

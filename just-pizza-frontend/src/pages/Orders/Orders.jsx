@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getOrders } from "../../services/order/order.api";
 import { PiChefHatThin } from "react-icons/pi";
+import { FaArrowRight } from "react-icons/fa6";
 
 function Orders() {
 
@@ -101,7 +102,7 @@ function Orders() {
                                                     to={`/orders/${order._id}`}
                                                     className="btn btn-outline-danger btn-sm"
                                                 >
-                                                    View Details
+                                                    View Details<FaArrowRight className="ms-1" />
                                                 </Link>
 
                                             </div>

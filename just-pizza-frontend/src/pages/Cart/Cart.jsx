@@ -307,7 +307,3 @@ function Cart() {
 }
 
 export default Cart;
-
-// import { FaArrowLeft } from "react-icons/fa6";
-
-//                         <FaArrowLeft className="mb-1 me-2" />Back to My Orders
