@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { getAllProducts } from "../../services/product/product.api";
+import { addToCart } from "../../services/cart/cart.api";
 import { useEffect, useState } from "react";
 import { qualitiesSection } from "../../data/qualitiesSection";
 import { customersReview } from "../../data/customersReview";
@@ -9,9 +10,30 @@ import { IoLogoInstagram } from "react-icons/io5";
 import "./Home.css";
 
 function Home() {
-
+    
+    const token = JSON.parse(localStorage.getItem("token"));
     const [productData, setProductData] = useState([]);
 
+
+    // handle add to cart
+    const handleAddToCart = async (productId) => {
+        if (!token) {
+            alert("Please login to add products to cart.");
+            return;
+        }
+
+        try {
+            const res = await addToCart(token, productId, 1);
+
+            alert(res.msg || "Product added to cart!");
+        } catch (error) {
+            console.error("Add to cart failed:", error);
+            alert(error.message || "Failed to add product to cart.");
+        }
+    };
+
+
+    // Get all products
     useEffect(() => {
         const getAllProductsData = async () => {
             try {
@@ -88,7 +110,13 @@ function Home() {
                                                         <p className="fw-semibold m-0" style={{color: "#df2620"}}>{"\u20B9"} {item.price}</p>
                                                         </div>
                                                         <div className="add-to-cart-button">
-                                                        <button className="add-to-cart-btn btn btn-sm btn-danger" type="button" disabled>{"\u002B"}</button>
+                                                        <button
+                                                            className="add-to-cart-btn btn btn-sm btn-danger"
+                                                            type="button"
+                                                            onClick={() => handleAddToCart(item._id)}
+                                                        >
+                                                            {"\u002B"}
+                                                        </button>
                                                         </div>
                                                     </div>
                                                 </div>

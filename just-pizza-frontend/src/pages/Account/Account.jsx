@@ -65,6 +65,11 @@ function Account() {
         navigate(`/edit/${userId}`)
     }
 
+    // Handle Edit Button
+    function handleMyOrdersBtn() {
+        navigate(`/edit/${userId}`)
+    }
+
     // Logout button
     const handleLogout = () => {
         const confirmLogout = window.confirm("Are you sure you want to logout?");
@@ -137,20 +142,22 @@ function Account() {
 
                                     <hr className="my-2"/>
                                     
-                                    <Link
+                                    <button
                                         className="btn border-0 my-orders-btn text-start"
-                                        to="/orders"
+                                        onClick={handleMyOrdersBtn} disabled={token ? false : true}
                                     >
                                         <BiFoodMenu className="mb-1 me-1" size={20} />
                                         My Orders
-                                    </Link>
+                                    </button>
                                     
                                     <hr className="my-2"/>
                                     
                                     <button 
                                         className="btn border-0 edit-profile-btn text-start" type='button' 
                                         onClick={handleEditBtn} disabled={token ? false : true}
-                                    ><FiEdit className="mb-2 me-1" size={20} />Edit Profile</button>
+                                    >
+                                        <FiEdit className="mb-2 me-1" size={20} />Edit Profile
+                                    </button>
                                     
                                     <hr className="my-2"/>
                                     
@@ -193,8 +200,11 @@ function Account() {
                                                 <button 
                                                     className="btn btn-outline-danger px-3 py-1" type='button' 
                                                     onClick={handleEditBtn} disabled={token ? false : true}
-                                                >Edit</button>
+                                                >
+                                                    Edit
+                                                </button>
                                             </div>
+
                                             <div className="card-body p-0">
                                                 <div className="profile-info d-flex align-items-center">
                                                     <div className="image-container">
@@ -226,13 +236,13 @@ function Account() {
                                                 <header>
                                                     <div className="header-content mb-3 d-flex justify-content-between align-items-center">
                                                         <h2 className="fs-5">Recent Orders</h2>
-                                                        <Link
+                                                        <button
                                                             className="btn border-0 text-danger fw-semibold"
-                                                            to="/orders"
+                                                            onClick={handleMyOrdersBtn} disabled={token ? false : true}
                                                         >
                                                             View All
                                                             <FaArrowRight className="mb-1 ms-2 fw-semibold" />
-                                                        </Link>
+                                                        </button>
                                                     </div>
                                                 </header>
                                                 {
