@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getCart, updateCartItem, removeCartItem, clearCart } from "../../services/cart/cart.api";
 import { getAllProducts } from "../../services/product/product.api";
+import { getCart, updateCartItem, removeCartItem, clearCart } from "../../services/cart/cart.api";
+import { createOrder } from "../../services/order/order.api";
 import { PiChefHatThin } from "react-icons/pi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa6";
@@ -125,6 +126,38 @@ function Cart() {
     };
 
 
+    // Create Order
+    const handleCreateOrder = async () => {
+        if (cartProducts.length === 0) {
+            alert("Your cart is empty.");
+            return;
+        }
+
+        const confirmOrder = window.confirm(
+            "Are you sure you want to place this order?"
+        );
+
+        if (!confirmOrder) {
+            return;
+        }
+
+        try {
+            const res = await createOrder(token);
+
+            alert(`Order placed successfully! Order ID: ${res.orderId}`);
+
+            setCartData((prev) => ({
+                ...prev,
+                items: []
+            }));
+
+        } catch (error) {
+            console.error("Create order failed:", error);
+            alert(error.message || "Failed to place order");
+        }
+    };
+
+
     return (
         <section>
             <header>
@@ -139,6 +172,7 @@ function Cart() {
                             className="btn btn-outline-danger fw-semibold"
                             type="button"
                             onClick={handleClearCart}
+                            disabled={!token || cartProducts.length === 0}
                         >
                             <RiDeleteBin6Line className="mb-1 me-2" />Clear Cart
                         </button>
@@ -254,7 +288,12 @@ function Cart() {
                                     <p className="m-1">Total</p>
                                     <h5 className="text-danger m-1">₹ {cartTotal}</h5>
                                 </div>
-                                <button className="btn px-4 py-2 w-100 btn-danger" type="button">
+                                <button
+                                    className="btn px-4 py-2 w-100 btn-danger"
+                                    type="button"
+                                    onClick={handleCreateOrder}
+                                    disabled={!token || cartProducts.length === 0}
+                                >
                                     Proceed to Checkout<FaArrowRight className="ms-2 mb-1" />
                                 </button>
                             </div>
@@ -268,3 +307,7 @@ function Cart() {
 }
 
 export default Cart;
+
+// import { FaArrowLeft } from "react-icons/fa6";
+
+//                         <FaArrowLeft className="mb-1 me-2" />Back to My Orders

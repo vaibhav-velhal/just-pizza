@@ -1,5 +1,6 @@
 import { userDetails } from '../../services/user/user.api';
 import { deleteUser } from '../../services/user/user.api';
+import { getOrders } from '../../services/order/order.api';
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { PiChefHatThin } from "react-icons/pi";
@@ -17,9 +18,10 @@ function Account() {
 
     const navigate = useNavigate();
 
-    const orders = false;
     const [userData, setUserData] = useState({});
+    const [orders, setOrders] = useState([]);
 
+    // Get User details
     useEffect(() => {
         const getUser = async () => {
             try {
@@ -33,6 +35,30 @@ function Account() {
 
         getUser();
     }, [token, userId]);
+
+
+    // Get recent orders
+    useEffect(() => {
+
+        const getUserOrders = async () => {
+            try {
+                const res = await getOrders(token);
+
+                console.log("Recent Orders:", res);
+
+                setOrders(res);
+
+            } catch (error) {
+                console.error("Failed to fetch orders:", error);
+            }
+        };
+
+        if (token) {
+            getUserOrders();
+        }
+
+    }, [token]);
+
 
     // Handle Edit Button
     function handleEditBtn() {
@@ -108,19 +134,33 @@ function Account() {
                                     <Link className="btn btn-danger profile-btn text-start" to={`/account/${userId}`}>
                                         <IoPerson className="mb-1 me-1" size={20} />Profile
                                     </Link>
+
                                     <hr className="my-2"/>
-                                    <button className="btn border-0 my-orders-btn text-start" type='button' disabled><BiFoodMenu className="mb-1 me-1" size={20} />My Orders</button>
+                                    
+                                    <Link
+                                        className="btn border-0 my-orders-btn text-start"
+                                        to="/orders"
+                                    >
+                                        <BiFoodMenu className="mb-1 me-1" size={20} />
+                                        My Orders
+                                    </Link>
+                                    
                                     <hr className="my-2"/>
+                                    
                                     <button 
                                         className="btn border-0 edit-profile-btn text-start" type='button' 
                                         onClick={handleEditBtn} disabled={token ? false : true}
                                     ><FiEdit className="mb-2 me-1" size={20} />Edit Profile</button>
+                                    
                                     <hr className="my-2"/>
+                                    
                                     <button 
                                         className="btn border-0 delete-profile-btn text-start" type='button' 
                                         onClick={handleDeleteUser} disabled={token ? false : true}
                                     ><MdDeleteOutline className="mb-2" size={21} />Delete account</button>
+                                    
                                     <hr className="my-2" />
+                                    
                                     {
                                         token ? 
                                         (
@@ -186,46 +226,54 @@ function Account() {
                                                 <header>
                                                     <div className="header-content mb-3 d-flex justify-content-between align-items-center">
                                                         <h2 className="fs-5">Recent Orders</h2>
-                                                        <button className="btn border-0 text-danger fw-semibold" disabled>View All<FaArrowRight className="mb-1 ms-2 fw-semibold" /></button>
+                                                        <Link
+                                                            className="btn border-0 text-danger fw-semibold"
+                                                            to="/orders"
+                                                        >
+                                                            View All
+                                                            <FaArrowRight className="mb-1 ms-2 fw-semibold" />
+                                                        </Link>
                                                     </div>
                                                 </header>
                                                 {
-                                                    [...Array(3)].map((_, index) => (
-                                                        <div className="card mb-3 rounded-3" key={index}>
-                                                            <div className="card-body d-flex justify-content-between">
-                                                                <div className="order-no col-3">
-                                                                    <h5 className="placeholder-glow">
-                                                                        <span className="placeholder bg-secondary bg-opacity-25 col-12 col-lg-6 rounded"></span>
-                                                                    </h5>
-                                                                    <p className="placeholder-glow">
-                                                                        <span className="placeholder bg-secondary bg-opacity-25 placeholder-sm col-6 col-lg-4 rounded"></span>
-                                                                    </p>
-                                                                </div>
-                                                                <div className="order-total col-5 col-lg-3 text-center">
-                                                                    <h5 className="placeholder-glow text-center">
-                                                                        <span className="placeholder placeholder-sm bg-secondary bg-opacity-25 col-6 rounded"></span>
-                                                                    </h5>
-                                                                    {
-                                                                        !orders ?
-                                                                        (
-                                                                            <div className="no-order-status">
-                                                                                <p className="text-secondary m-0">No order yet...</p>
-                                                                            </div>
-                                                                        ) :
-                                                                        (null)
-                                                                    }
-                                                                </div>
-                                                                <div className="order-status col-3">
-                                                                    <h5 className="placeholder-glow text-end">
-                                                                        <span className="placeholder col-12 col-lg-6 rounded" style={{backgroundColor: "hsl(120deg 75% 80%)"}}></span>
-                                                                    </h5>
-                                                                    <p className="placeholder-glow text-end">
-                                                                        <span className="placeholder bg-secondary bg-opacity-25 placeholder-sm col-6 col-lg-4 rounded"></span>
-                                                                    </p>
+                                                    orders.length === 0 ? (
+                                                        <p className="text-secondary text-center">
+                                                            No orders yet...
+                                                        </p>
+                                                    ) : (
+                                                        orders.slice(0, 3).map((order) => (
+                                                            <div
+                                                                className="card mb-3 rounded-3"
+                                                                key={order._id}
+                                                            >
+                                                                <div className="card-body d-flex justify-content-between align-items-center">
+
+                                                                    <div>
+                                                                        <h5 className="mb-1">
+                                                                            Order #{order._id.slice(-6)}
+                                                                        </h5>
+
+                                                                        <p className="text-secondary mb-0">
+                                                                            ₹ {order.totalAmount}
+                                                                        </p>
+                                                                    </div>
+
+                                                                    <div className="text-end">
+
+                                                                        <p className="mb-1 text-capitalize">
+                                                                            {order.status}
+                                                                        </p>
+
+                                                                        <p className="text-secondary mb-0">
+                                                                            {new Date(order.createdAt).toLocaleDateString()}
+                                                                        </p>
+
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
-                                                        </div>                                                        
-                                                    ))
+                                                        ))
+                                                    )
                                                 }
                                             </div>
                                         </div>

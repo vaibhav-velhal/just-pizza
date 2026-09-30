@@ -10,6 +10,7 @@ const userRoutes = require("./modules/users/user.routes.js");
 const categoryRoutes = require("./modules/categories/category.routes.js");
 const productRoutes = require("./modules/products/product.routes.js");
 const cartRoutes = require("./modules/cart/cart.routes.js");
+const orderRoutes = require("./modules/orders/order.routes.js");
 
 
 app.use(express.json());
@@ -32,6 +33,9 @@ router.use("/api/product", productRoutes);
 
 // Cart route
 router.use("/api/cart", middleware.auth, cartRoutes);
+
+// Order route
+router.use("/api/order", middleware.auth, orderRoutes);
 
 
 // Response middleware
