@@ -44,8 +44,6 @@ function Account() {
             try {
                 const res = await getOrders(token);
 
-                console.log("Recent Orders:", res);
-
                 setOrders(res);
 
             } catch (error) {

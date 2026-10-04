@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllProducts } from "../../services/product/product.api";
 import { getCart, updateCartItem, removeCartItem, clearCart } from "../../services/cart/cart.api";
 import { createOrder } from "../../services/order/order.api";
+import { createPayment, verifyPayment } from "../../services/payment/payment.api";
 import { PiChefHatThin } from "react-icons/pi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa6";
@@ -158,6 +159,106 @@ function Cart() {
     };
 
 
+
+    useEffect(() => {
+        const script = document.createElement("script");
+
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+
+
+    // Handle payment after click "Proceed to Checkout" button
+    const handlePayment = async () => {
+        if (cartProducts.length === 0) {
+            alert("Your cart is empty.");
+            return;
+        }
+
+        const confirmOrder = window.confirm(
+            "Are you sure you want to place this order?"
+        );
+
+        if (!confirmOrder) {
+            return;
+        }
+
+        try {
+            // Step 1: Create application order
+            const orderRes = await createOrder(token);
+
+            console.log("Order Data:", orderRes);
+
+            const orderId = orderRes.orderId;
+
+            // Step 2: Create Razorpay payment order
+            const paymentData = await createPayment(token, orderId);
+
+            console.log("Payment Data:", paymentData);
+
+            // Step 3: Open Razorpay Checkout
+            const options = {
+                key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+
+                amount: paymentData.amount,
+                currency: paymentData.currency,
+
+                name: "JustPizza",
+                description: "Pizza Order",
+
+                order_id: paymentData.razorpayOrderId,
+
+                handler: async function (response) {
+                    try {
+                        console.log("Razorpay Payment Response:", response);
+
+                        const paymentData = {
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature
+                        };
+
+                        const verifyRes = await verifyPayment(token, paymentData);
+
+                        console.log("Payment Verification:", verifyRes);
+
+                        alert("Payment successful!");
+
+                        setCartData((prev) => ({
+                            ...prev,
+                            items: []
+                        }));
+
+                    } catch (error) {
+                        console.error("Payment verification failed:", error);
+                        alert(error.message || "Payment verification failed");
+                    }
+                },
+
+                theme: {
+                    color: "#df2620"
+                }
+            };
+
+            const razorpay = new window.Razorpay(options);
+
+            razorpay.open();
+
+        } catch (error) {
+            console.error("Payment failed:", error);
+            alert(error.message || "Payment failed");
+        }
+    };
+
+
+
     return (
         <section>
             <header>
@@ -291,7 +392,8 @@ function Cart() {
                                 <button
                                     className="btn px-4 py-2 w-100 btn-danger"
                                     type="button"
-                                    onClick={handleCreateOrder}
+                                    // onClick={handleCreateOrder}
+                                    onClick={handlePayment}
                                     disabled={!token || cartProducts.length === 0}
                                 >
                                     Proceed to Checkout<FaArrowRight className="ms-2 mb-1" />

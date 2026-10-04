@@ -127,7 +127,7 @@ function Login() {
                                 </button>
 
                                 <div className="desc text-center">                                    
-                                    <p className="text-secondary mb-1">Don't have account? <Link to="/register" className="fw-semibold">Register here</Link></p>                                    
+                                    <p className="text-secondary mb-1">Don't have an account? <Link to="/register" className="fw-semibold">Register here</Link></p>                                    
                                     <Link to="/" className="fw-semibold">Return to Home</Link>
                                 </div>
                             </form>

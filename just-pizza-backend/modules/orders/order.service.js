@@ -84,11 +84,6 @@ orderService.createOrder = async function(req, res, next) {
         // Create Order Items
         await orderDb.createOrderItems(orderItemsWithOrderId);
 
-        // Clear Cart
-        await cartItemModel.deleteMany({
-            cartId: cart._id
-        });
-
         res.status(201).json({
             msg: "Order created successfully!",
             orderId: order._id,
