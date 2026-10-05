@@ -27,7 +27,7 @@ export const createPayment = async (token, orderId) => {
 // Verify Razorpay payment
 export const verifyPayment = async (token, paymentData) => {
     const response = await fetch(
-        "http://localhost:3000/api/payment/verify",
+        `${BASE_URL}/api/payment/verify`,
         {
             method: "POST",
             headers: {
