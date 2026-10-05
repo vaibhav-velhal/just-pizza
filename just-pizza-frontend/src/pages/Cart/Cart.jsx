@@ -194,14 +194,14 @@ function Cart() {
             // Step 1: Create application order
             const orderRes = await createOrder(token);
 
-            console.log("Order Data:", orderRes);
+            // console.log("Order Data:", orderRes);
 
             const orderId = orderRes.orderId;
 
             // Step 2: Create Razorpay payment order
             const paymentData = await createPayment(token, orderId);
 
-            console.log("Payment Data:", paymentData);
+            // console.log("Payment Data:", paymentData);
 
             // Step 3: Open Razorpay Checkout
             const options = {
@@ -217,7 +217,7 @@ function Cart() {
 
                 handler: async function (response) {
                     try {
-                        console.log("Razorpay Payment Response:", response);
+                        // console.log("Razorpay Payment Response:", response);
 
                         const paymentData = {
                             razorpay_order_id: response.razorpay_order_id,
@@ -227,7 +227,7 @@ function Cart() {
 
                         const verifyRes = await verifyPayment(token, paymentData);
 
-                        console.log("Payment Verification:", verifyRes);
+                        // console.log("Payment Verification:", verifyRes);
 
                         alert("Payment successful!");
 

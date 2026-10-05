@@ -202,7 +202,7 @@ paymentService.handleWebhook = async function(req, res, next) {
 
         const event = req.body.event;
 
-        console.log("Razorpay Webhook Event:", event);
+        // console.log("Razorpay Webhook Event:", event);
 
         // Payment captured successfully
         if (event === "payment.captured") {
@@ -260,7 +260,7 @@ paymentService.handleWebhook = async function(req, res, next) {
                 });
             }
 
-            console.log("Payment marked as paid through webhook.");
+            // console.log("Payment marked as paid through webhook.");
         }
 
 
@@ -302,7 +302,7 @@ paymentService.handleWebhook = async function(req, res, next) {
                 }
             );
 
-            console.log("Payment marked as failed through webhook.");
+            // console.log("Payment marked as failed through webhook.");
         }
 
         res.status(200).json({

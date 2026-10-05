@@ -22,7 +22,7 @@ function OrderDetails() {
                 const orderRes = await getOrderById(token, orderId);
                 const productRes = await getAllProducts();
 
-                console.log("Order Details:", orderRes);
+                // console.log("Order Details:", orderRes);
 
                 setOrder(orderRes.order);
                 setOrderItems(orderRes.items);

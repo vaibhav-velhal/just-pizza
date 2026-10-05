@@ -70,7 +70,7 @@ function Orders() {
                 order._id
             );
 
-            console.log("Pay Now Payment Data:", paymentData);
+            // console.log("Pay Now Payment Data:", paymentData);
 
 
             // Step 2: Open Razorpay Checkout
@@ -90,10 +90,7 @@ function Orders() {
 
                     try {
 
-                        console.log(
-                            "Pay Now Razorpay Response:",
-                            response
-                        );
+                        // console.log("Pay Now Razorpay Response:", response);
 
                         const paymentDetails = {
 
@@ -115,10 +112,7 @@ function Orders() {
                             paymentDetails
                         );
 
-                        console.log(
-                            "Pay Now Payment Verification:",
-                            verifyRes
-                        );
+                        // console.log("Pay Now Payment Verification:", verifyRes);
 
 
                         alert("Payment successful!");
@@ -135,10 +129,7 @@ function Orders() {
 
                     } catch (error) {
 
-                        console.error(
-                            "Pay Now payment verification failed:",
-                            error
-                        );
+                        // console.error("Pay Now payment verification failed:", error);
 
                         alert(
                             error.message ||
@@ -161,10 +152,7 @@ function Orders() {
 
         } catch (error) {
 
-            console.error(
-                "Pay Now payment failed:",
-                error
-            );
+            // console.error("Pay Now payment failed:", error);
 
             alert(
                 error.message ||
