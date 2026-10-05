@@ -205,7 +205,7 @@ function Cart() {
 
             // Step 3: Open Razorpay Checkout
             const options = {
-                key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+                key: import.meta.env.RAZORPAY_KEY_ID,
 
                 amount: paymentData.amount,
                 currency: paymentData.currency,

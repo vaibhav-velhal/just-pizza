@@ -183,16 +183,13 @@ function OrderDetails() {
                                                 ₹ {item.orderPrice} × {item.quantity}
                                             </p>
 
-                                            <p className="text-secondary mb-0">
+                                            <p className="text-secondary mb-1">
                                                 {item.description}
                                             </p>
 
-                                        </div>
-
-                                        <div>
-                                            <h5 className="text-danger mb-0">
-                                                ₹ {itemTotal}
-                                            </h5>
+                                            <h6 className="mb-0">
+                                                Total: <span className="text-danger">₹ {itemTotal}</span>
+                                            </h6>
                                         </div>
 
                                     </div>
