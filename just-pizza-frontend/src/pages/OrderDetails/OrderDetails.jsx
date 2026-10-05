@@ -179,7 +179,7 @@ function OrderDetails() {
                                                 {item.name}
                                             </h5>
 
-                                            <p className="text-secondary mb-1">
+                                            <p className="text-secondary mb-0">
                                                 ₹ {item.orderPrice} × {item.quantity}
                                             </p>
 
