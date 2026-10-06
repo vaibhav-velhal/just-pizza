@@ -282,14 +282,21 @@ paymentService.handleWebhook = async function(req, res, next) {
                 });
             }
 
-            // Update payment
-            await paymentDb.updatePayment(
-                razorpayOrderId,
-                {
-                    razorpayPaymentId: razorpayPaymentId,
-                    status: "failed"
+                // Idempotency check
+                if (payment.status === "failed") {
+                    return res.status(200).json({
+                        msg: "Payment already processed."
+                    });
                 }
-            );
+
+                // Update payment
+                await paymentDb.updatePayment(
+                    razorpayOrderId,
+                    {
+                        razorpayPaymentId: razorpayPaymentId,
+                        status: "failed"
+                    }
+                );
 
             // Update order
             await orderModel.updateOne(

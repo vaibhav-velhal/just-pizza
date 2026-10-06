@@ -7,7 +7,9 @@
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon main.js"
+    "start": "nodemon main.js",
+    "seed": "node seed/seed.js",
+    "migrate": "node migrations/migrate.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
