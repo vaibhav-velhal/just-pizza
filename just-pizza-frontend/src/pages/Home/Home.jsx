@@ -78,7 +78,7 @@ function Home() {
                                     return(
                                         <div className="col-3 text-center" key={index}>
                                             <div className="img-container mb-3">
-                                                <img src={item.img} alt={item.name} />
+                                                <img src={item.img} alt={item.name} loading="lazy" />
                                             </div>
                                             <h2 className="fw-semibold fs-6 mb-1">{item.name}</h2>
                                             <p className="text-secondary">{item.subText}</p>
@@ -102,7 +102,7 @@ function Home() {
                                             <div className="card h-100 shadow-sm border border-opacity-10 rounded-3">
                                                 <div className="card-body d-flex flex-column justify-content-between p-0">
                                                     <div className="image-container rounded-top-3">
-                                                        <img src={item.image} alt={item.name} />
+                                                        <img src={item.image} alt={item.name} loading="lazy" />
                                                     </div>
                                                     <div className="pizza-content d-flex justify-content-between align-items-end p-3">
                                                         <div className="pizza-desc">
@@ -183,7 +183,7 @@ function Home() {
                                         <div className="post col-6 col-md-3 px-1 mb-2 mb-md-0" key={index}>
                                             <a href="https://www.instagram.com/" target="_blank">
                                                 <div className="image-container">
-                                                    <img src={item.image} alt={item.name} className="rounded-3" />
+                                                    <img src={item.image} alt={item.name} loading="lazy" className="rounded-3" />
                                                 </div>
                                                 <div className="caption mx-1 rounded-3">
                                                     <div className="instagram-icon"><IoLogoInstagram size={45} /></div>

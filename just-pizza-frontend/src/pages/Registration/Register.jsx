@@ -70,7 +70,7 @@ function Register() {
                 <div className="col-md-8 col-12 ms-auto py-5 registration-container d-flex flex-column justify-content-center">
                     <section>
                         <h1 className="text-center mb-1 fs-2">
-                            <img src="./../../../logo.png" alt="JustPizza-logo" className="mb-2" style={{height: 30, width: 30}}/>
+                            <img src="./../../../logo.png" alt="JustPizza-logo" loading="lazy" className="mb-2" style={{height: 30, width: 30}}/>
                             JustPizza
                         </h1>
                         <h2 className="text-center fs-1">Create Account</h2>

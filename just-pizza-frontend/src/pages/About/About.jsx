@@ -18,7 +18,7 @@ function About() {
               <PiChefHatThin size={40} style={{ color: "#df2620" }} />
               <h1 className="fw-semibold m-0">About Us</h1>
               <div className="image-container mb-2">
-                <img src={designImage} alt="Design Image" style={{width: 200}} />
+                <img src={designImage} loading="lazy" alt="Design Image" style={{width: 200}} />
               </div>
             </div>
             <h2 className="fs-5 text-secondary mb-3">
@@ -81,7 +81,7 @@ function About() {
                   </div>
                   <div className="icon-container">
                     <div className="image-container">
-                      <img src={quality} alt="Quality Image" className="quality-image" />
+                      <img src={quality} alt="Quality Image" loading="lazy" className="quality-image" />
                     </div>
                   </div>
                 </div>
@@ -120,7 +120,7 @@ function About() {
                     return(
                       <div className="col-3 text-center" key={index}>
                         <div className="image-container mb-2">
-                          <img src={item.img} alt={item.name} className="icon" style={{width: 70}} />
+                          <img src={item.img} alt={item.name} loading="lazy" className="icon" style={{width: 70}} />
                         </div>
                         <p className="fw-semibold m-0">{item.name}</p>
                       </div>
@@ -142,7 +142,7 @@ function About() {
                   return(
                     <div className="col-6 col-md-3 mb-5 mb-lg-0" key={index}>
                       <div className="image-container mb-2">
-                        <img src={item.img} alt={item.title} style={{width: 70}} />
+                        <img src={item.img} alt={item.title} loading="lazy" style={{width: 70}} />
                       </div>
                       <h3>{item.title}</h3>
                       <p className="fw-semibold m-0">{item.desc}</p>

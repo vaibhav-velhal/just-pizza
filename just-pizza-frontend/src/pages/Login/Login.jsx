@@ -57,7 +57,7 @@ function Login() {
                 <div className="col-md-8 col-12 ms-auto login-container d-flex flex-column justify-content-center">
                     <section>
                         <h1 className="text-center mb-1 fs-2">
-                            <img src="./../../../logo.png" alt="JustPizza-logo" className="mb-2" style={{height: 30, width: 30}}/>
+                            <img src="./../../../logo.png" alt="JustPizza-logo" loading="lazy" className="mb-2" style={{height: 30, width: 30}}/>
                             JustPizza
                         </h1>
                         <h2 className="text-center fs-1">Welcome Back!</h2>

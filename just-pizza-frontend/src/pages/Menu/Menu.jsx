@@ -126,7 +126,7 @@ function Menu() {
                           <div className="card h-100 shadow-sm border border-opacity-10 rounded-3">
                             <div className="card-body d-flex flex-column justify-content-between p-0">
                               <div className="image-container rounded-top-3">
-                                <img src={item.image} alt={item.name} />
+                                <img src={item.image} alt={item.name} loading="lazy" />
                               </div>
                               <div className="pizza-content d-flex justify-content-between align-items-end p-3">
                                 <div className="pizza-desc">

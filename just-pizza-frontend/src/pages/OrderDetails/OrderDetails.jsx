@@ -165,6 +165,7 @@ function OrderDetails() {
                                         <img
                                             src={item.image}
                                             alt={item.name}
+                                            loading="lazy"
                                             style={{
                                                 width: "90px",
                                                 height: "90px",

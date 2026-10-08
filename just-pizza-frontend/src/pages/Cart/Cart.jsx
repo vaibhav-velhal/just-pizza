@@ -301,6 +301,7 @@ function Cart() {
                                                             <img
                                                                 src={item.image}
                                                                 alt={item.name}
+                                                                loading="lazy"
                                                                 style={{
                                                                     width: "120px",
                                                                     height: "120px",
