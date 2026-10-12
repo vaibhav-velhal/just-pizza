@@ -47,30 +47,31 @@ const userService = {};
 
 
 // Get all users
-userService.getAllUsers = function(req, res, next) {
-    try {
-        const db = req.app.locals.db;
+// userService.getAllUsers = function(req, res, next) {
+//     try {
+//         const db = req.app.locals.db;
 
-        userDb.getAllUsers(db)
-            .then(function(output){
-                res.status(200).send(output);
-            })
-            .catch(function(error){
-                next(error);
-            });
-    } catch(error) {
-        next(error);
-    }
-};
+//         userDb.getAllUsers(db)
+//             .then(function(output){
+//                 res.status(200).send(output);
+//             })
+//             .catch(function(error){
+//                 next(error);
+//             });
+//     } catch(error) {
+//         next(error);
+//     }
+// };
 
 
-// Get one user by ID
+// Get a single user
 userService.getUserById = function(req, res, next) {
     try {
         const db = req.app.locals.db;
-        const params = req.params.userId;
-
-        userDb.getUserById(db, params)
+        // const params = req.params.userId;
+        const userId = req.headers.userId;
+        
+        userDb.getUserById(db, userId)
             .then(function(user){
                 if(!user){
                     return res.status(404).send("User not found.");
@@ -98,9 +99,10 @@ userService.getUserById = function(req, res, next) {
 userService.deleteUser = function(req, res, next) {
     try {
         const db = req.app.locals.db;
-        const params = req.params.userId;
+        // const params = req.params.userId;
+        const userId = req.headers.userId;
 
-        userDb.deleteUser(db, params)
+        userDb.deleteUser(db, userId)
             .then(function(output){
                 if (output.deletedCount === 0) {
                     return res.status(404).json({msg: "User not found."});
@@ -126,7 +128,8 @@ userService.updateUser = function(req, res, next) {
         }
 
         const db = req.app.locals.db;
-        const params = req.params.userId;
+        // const params = req.params.userId;
+        const userId = req.headers.userId;
 
         const updateSchema = joi.object({
             firstName: joi.string().pattern(/^[A-Za-z ]+$/).min(2).max(20).required(),
@@ -148,7 +151,7 @@ userService.updateUser = function(req, res, next) {
             return;
         }
 
-        userDb.updateUser(db, params, value)
+        userDb.updateUser(db, userId, value)
             .then(function(output){
                 res.status(200).json({msg: "User has updated successfully!"})
             })

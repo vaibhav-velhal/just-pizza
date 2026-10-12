@@ -4,7 +4,7 @@ import "./Navbar.css";
 
 function Navbar() {
     const token = JSON.parse(localStorage.getItem("token"));
-    const userId = localStorage.getItem("userId");
+    // const userId = localStorage.getItem("userId");
 
     const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ function Navbar() {
                             {cartBtn}
                         </li>
                         <li className="nav-item fw-semibold">
-                            <NavLink to={`/account/${userId}`} className="account-btn px-3 py-2 text-light fw-semibold rounded-2">Account</NavLink>
+                            <NavLink to={"/account"} className="account-btn px-3 py-2 text-light fw-semibold rounded-2">Account</NavLink>
                         </li>
                         <li className="nav-item">
                             <div className="auth-btn">

@@ -14,7 +14,7 @@ import { MdDeleteOutline } from "react-icons/md";
 function Account() {
 
     const token = JSON.parse(localStorage.getItem("token"));
-    const userId = localStorage.getItem("userId");
+    // const userId = localStorage.getItem("userId");
 
     const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ function Account() {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const res = await userDetails(token, userId);
+                const res = await userDetails(token);
                 
                 setUserData(res);
             } catch (error) {
@@ -34,7 +34,7 @@ function Account() {
         };
 
         getUser();
-    }, [token, userId]);
+    }, [token]);
 
 
     // Get recent orders
@@ -60,7 +60,7 @@ function Account() {
 
     // Handle Edit Button
     function handleEditBtn() {
-        navigate(`/edit/${userId}`)
+        navigate("/edit")
     }
 
     // Handle MyOrders Button
@@ -85,7 +85,7 @@ function Account() {
 
         if(confirmDelete) {
             try {
-                const res = await deleteUser(token, userId);
+                const res = await deleteUser(token);
     
                 if(res.msg === "User deleted successfully!") {
                     alert(res.msg);
@@ -134,7 +134,7 @@ function Account() {
                         <div className="col-12 col-md-3 mb-4 mb-lg-0">
                             <div className="card shadow-sm border border-opacity-10 rounded-4">
                                 <div className="card-body d-flex flex-column">
-                                    <Link className="btn btn-danger profile-btn text-start" to={`/account/${userId}`}>
+                                    <Link className="btn btn-danger profile-btn text-start" to={"/account"}>
                                         <IoPerson className="mb-1 me-1" size={20} />Profile
                                     </Link>
 

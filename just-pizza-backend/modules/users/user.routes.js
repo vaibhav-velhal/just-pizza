@@ -4,19 +4,19 @@ const userService = require("./user.service.js");
 
 
 // Get users
-router.get("/", userService.getAllUsers);
+// router.get("/", userService.getAllUsers);
 
-// Get one user by ID
-router.get("/:userId", userService.getUserById);
+// Get a single user
+router.get("/", userService.getUserById);
 
 // // Insert user
 // router.post("/", userService.addUser);
 
 // Delete user
-router.delete("/:userId", userService.deleteUser);
+router.delete("/", userService.deleteUser);
 
 // Update user
-router.patch("/:userId", userService.updateUser);
+router.patch("/", userService.updateUser);
 
 
 module.exports = router;

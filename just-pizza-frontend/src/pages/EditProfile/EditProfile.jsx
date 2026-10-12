@@ -12,7 +12,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 function EditProfile() {
 
     const token = JSON.parse(localStorage.getItem("token"));
-    const userId = localStorage.getItem("userId");
+    // const userId = localStorage.getItem("userId");
 
     const [isLoading, setIsLoading] = useState(false);
     const [firstName, setFirstName] = useState("");
@@ -32,7 +32,7 @@ function EditProfile() {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const res = await userDetails(token, userId);
+                const res = await userDetails(token);
                 
                 setFirstName(res.firstName);
                 setLastName(res.lastName);
@@ -44,7 +44,7 @@ function EditProfile() {
         };
 
         getUser();
-    }, [token, userId]);
+    }, [token]);
 
 
     // Handle Edit user
@@ -66,7 +66,7 @@ function EditProfile() {
         };
 
         try {
-            const res = await editUser(token, userId, userData);
+            const res = await editUser(token, userData);
             
             setShowNewPassword(false);
             setShowConfirmPassword(false);
@@ -74,7 +74,7 @@ function EditProfile() {
 
             if(res.msg === "User has updated successfully!") {
                 alert(res.msg);
-                navigate(`/account/${userId}`);
+                navigate("/account");
             }
         } catch(error) {
             if (!navigator.onLine) {
@@ -100,7 +100,7 @@ function EditProfile() {
         const confirmCancel = window.confirm("Are you sure you want to discard changes?");
 
         if(confirmCancel) {
-            navigate(`/account/${userId}`);
+            navigate("/account");
         }
     }
 

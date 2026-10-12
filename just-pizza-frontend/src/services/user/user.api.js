@@ -1,8 +1,8 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 // User Details
-export const userDetails = async (token, userId) => {
-    const res = await fetch(`${BASE_URL}/api/user/${userId}`,{
+export const userDetails = async (token) => {
+    const res = await fetch(`${BASE_URL}/api/user`,{
         "method": "GET",
         "headers": {
             "authorization": `Bearer ${token}`
@@ -20,8 +20,8 @@ export const userDetails = async (token, userId) => {
 
 
 // Edit User
-export const editUser = async (token, userId, userData) => {
-    const res = await fetch(`${BASE_URL}/api/user/${userId}`, {
+export const editUser = async (token, userData) => {
+    const res = await fetch(`${BASE_URL}/api/user`, {
         method: "PATCH",
         headers: {
             "content-type": "application/json",
@@ -39,8 +39,8 @@ export const editUser = async (token, userId, userData) => {
 };
 
 // Delete User
-export const deleteUser = async (token, userId) => {
-    const res = await fetch(`${BASE_URL}/api/user/${userId}`, {
+export const deleteUser = async (token) => {
+    const res = await fetch(`${BASE_URL}/api/user`, {
         method: "DELETE",
         headers: {
             "authorization": `Bearer ${token}`
