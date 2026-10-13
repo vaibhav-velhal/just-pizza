@@ -4,90 +4,210 @@ import "./Navbar.css";
 
 function Navbar() {
     const token = localStorage.getItem("token");
-
     const navigate = useNavigate();
 
-
     const handleLogout = () => {
-        const confirmLogout = window.confirm("Are you sure you want to logout?");
+        const confirmLogout = window.confirm(
+            "Are you sure you want to logout?"
+        );
 
-        if(confirmLogout) {
+        if (confirmLogout) {
             localStorage.removeItem("token");
             navigate("/");
         }
     };
 
-    const cartBtn = <NavLink to="/cart" aria-label="Cart"><BsCart3 className="text-dark" size={24} /></NavLink>
+    const closeOffcanvas = () => {
+        const offcanvasElement = document.getElementById("mobileNavbar");
+        const offcanvasInstance = window.bootstrap?.Offcanvas.getInstance(
+            offcanvasElement
+        );
 
+        offcanvasInstance?.hide();
+    };
+
+    const navLinks = [
+        { to: "/", label: "Home" },
+        { to: "/menu", label: "Menu" },
+        { to: "/about", label: "About" },
+    ];
+
+    const renderNavLinks = (isMobile = false) =>
+        navLinks.map(({ to, label }) => (
+            <li className="nav-item fw-semibold" key={to}>
+                <NavLink
+                    to={to}
+                    end={to === "/"}
+                    className="nav-link"
+                    onClick={isMobile ? closeOffcanvas : undefined}
+                >
+                    {label}
+                </NavLink>
+            </li>
+        ));
+
+    const cartBtn = (
+        <NavLink
+            to="/cart"
+            className="cart-link"
+            aria-label="Shopping cart"
+            onClick={closeOffcanvas}
+        >
+            <BsCart3 size={24} />
+        </NavLink>
+    );
+
+    const accountBtn = (
+        <NavLink
+            to="/account"
+            className="account-btn px-3 py-2 text-light fw-semibold rounded-2"
+            onClick={closeOffcanvas}
+        >
+            Account
+        </NavLink>
+    );
+
+    const authBtn = token ? (
+        <button
+            className="btn btn-outline-dark rounded-pill px-3 py-1"
+            type="button"
+            onClick={() => {
+                closeOffcanvas();
+                handleLogout();
+            }}
+        >
+            Logout
+        </button>
+    ) : (
+        <NavLink
+            className="btn btn-outline-dark rounded-pill px-3 py-1"
+            to="/login"
+            onClick={closeOffcanvas}
+        >
+            Login
+        </NavLink>
+    );
 
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid px-md-5">
+
+                {/* Mobile: menu toggle */}
                 <button
-                    className="navbar-toggler border-0 p-0 shadow-none"
+                    className="navbar-toggler border-0 p-0 shadow-none d-lg-none"
                     type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#mobileNavbar"
+                    aria-controls="mobileNavbar"
+                    aria-label="Open navigation menu"
                 >
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <a href="/" className="navbar-brand mx-auto mx-lg-0 fs-4 fw-semibold">
-                    <img src="/logo.png" alt="JustPizza-logo" className="mb-1" style={{height: 30, width: 30}}/>JustPizza
-                </a>
+                {/* Desktop logo */}
+                <NavLink
+                    to="/"
+                    className="navbar-brand d-none d-lg-flex align-items-center fs-4 fw-semibold"
+                >
+                    <img
+                        src="/logo.png"
+                        alt=""
+                        className="me-1"
+                        style={{ height: 30, width: 30 }}
+                    />
+                    JustPizza
+                </NavLink>
 
-                <div className="collapse navbar-collapse justify-content-between" id="navbarNav">
-                    <ul className="navbar-nav mx-auto gap-1 gap-md-4">
-                        <li className="nav-item fw-semibold">
-                            <NavLink to="/">Home</NavLink>
-                        </li>
-                        <li className="nav-item fw-semibold">
-                            <NavLink to="/menu">Menu</NavLink>
-                        </li>
-                        <li className="nav-item fw-semibold">
-                            <NavLink to="/about">About</NavLink>
-                        </li>
+                {/* Mobile logo */}
+                <NavLink
+                    to="/"
+                    className="navbar-brand mx-auto d-lg-none fs-4 fw-semibold"
+                >
+                    <img
+                        src="/logo.png"
+                        alt=""
+                        className="mb-1 me-1"
+                        style={{ height: 30, width: 30 }}
+                    />
+                    JustPizza
+                </NavLink>
+
+                {/* Desktop navigation */}
+                <div className="d-none d-lg-flex align-items-center flex-grow-1">
+                    <ul className="navbar-nav mx-auto gap-1 gap-xl-2">
+                        {renderNavLinks()}
                     </ul>
-                    <ul className="navbar-nav align-items-lg-center my-2 my-lg-0 gap-1 gap-md-3">
-                        <li className="nav-item fw-semibold d-none d-lg-block">
+
+                    <ul className="navbar-nav align-items-center gap-3">
+                        <li className="nav-item">
                             {cartBtn}
                         </li>
-                        <li className="nav-item fw-semibold">
-                            <NavLink to={"/account"} className="account-btn px-3 py-2 text-light fw-semibold rounded-2">Account</NavLink>
+                        <li className="nav-item">
+                            {accountBtn}
                         </li>
                         <li className="nav-item">
-                            <div className="auth-btn">
-                                {
-                                    token ? (
-                                        <button
-                                            className="btn btn-outline-dark rounded-pill px-3 py-1"
-                                            type="button"
-                                            onClick={handleLogout}
-                                        >
-                                            Logout
-                                        </button>
-                                    ) : (
-                                        <NavLink
-                                            className="btn btn-outline-dark rounded-pill px-3 py-1"
-                                            to="/login"
-                                        >
-                                            Login
-                                        </NavLink>
-                                    )
-                                }
-                            </div>
+                            {authBtn}
                         </li>
                     </ul>
                 </div>
+
+                {/* Mobile cart */}
                 <div className="d-lg-none">
                     {cartBtn}
                 </div>
+
+                {/* Mobile offcanvas */}
+                <div
+                    className="offcanvas offcanvas-start d-lg-none"
+                    tabIndex="-1"
+                    id="mobileNavbar"
+                    aria-labelledby="mobileNavbarLabel"
+                >
+                    <div className="offcanvas-header border-bottom">
+                        <NavLink
+                            to="/"
+                            className="navbar-brand fs-4 fw-semibold"
+                            onClick={closeOffcanvas}
+                        >
+                            <img
+                                src="/logo.png"
+                                alt=""
+                                className="mb-1 me-1"
+                                style={{ height: 30, width: 30 }}
+                            />
+                            <span id="mobileNavbarLabel">JustPizza</span>
+                        </NavLink>
+
+                        <button
+                            type="button"
+                            className="btn-close shadow-none"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close navigation menu"
+                        ></button>
+                    </div>
+
+                    <div className="offcanvas-body d-flex flex-column">
+                        <ul className="navbar-nav gap-0">
+                            {renderNavLinks(true)}
+                        </ul>
+
+                        <hr />
+
+                        <ul className="navbar-nav gap-3">
+                            <li className="nav-item">
+                                {accountBtn}
+                            </li>
+
+                            <li className="nav-item">
+                                {authBtn}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </nav>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;

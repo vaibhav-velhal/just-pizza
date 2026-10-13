@@ -1,22 +1,73 @@
-.navbar-collapse li a {
-    cursor: pointer;
-}
-
-.navbar-collapse a, .navbar-collapse li {
-    list-style-type: none;
+/* Navbar links */
+.navbar-nav .nav-link {
+    color: #212529;
     text-decoration: none;
-    color: black;
+    transition: color 0.2s ease;
 }
 
-.navbar-nav a.active {
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
     color: #df2620;
+}
+
+.navbar-nav .nav-link.active {
     text-decoration: underline;
+    text-underline-offset: 5px;
 }
 
-.navbar-nav .account-btn {
+/* Account button */
+.navbar-nav .account-btn,
+.account-btn {
+    display: inline-block;
     background-color: #df2620;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
 }
 
-.navbar-nav .account-btn:hover {
+.navbar-nav .account-btn:hover,
+.account-btn:hover {
     background-color: #c9221d;
+    color: #fff;
+}
+
+/* Cart icon */
+.cart-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #212529;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.cart-link:hover {
+    color: #df2620;
+}
+
+/* Offcanvas navigation */
+#mobileNavbar {
+    width: min(320px, 85vw);
+}
+
+#mobileNavbar .offcanvas-header {
+    padding: 1.25rem;
+}
+
+#mobileNavbar .offcanvas-body {
+    padding: 1.25rem;
+}
+
+#mobileNavbar .navbar-nav .nav-link {
+    display: block;
+    padding: 0.65rem 0.25rem;
+}
+
+#mobileNavbar .account-btn {
+    text-align: center;
+}
+
+/* Make the mobile auth button fit its container */
+#mobileNavbar .auth-btn {
+    width: 100%;
 }
