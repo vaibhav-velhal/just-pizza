@@ -1,6 +1,6 @@
 .login-page {
     min-height: 100vh;
-    background: url("./../../../public/pizza-auth-image.jpg") no-repeat center;
+    background: url("/pizza-auth-image.jpg") no-repeat center;
 }
 
 .login-page .login-container {

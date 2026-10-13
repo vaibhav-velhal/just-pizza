@@ -38,7 +38,7 @@ function Navbar() {
                 </button>
 
                 <a href="/" className="navbar-brand mx-auto mx-lg-0 fs-4 fw-semibold">
-                    <img src="./../../../logo.png" alt="JustPizza-logo" className="mb-1" style={{height: 30, width: 30}}/>JustPizza
+                    <img src="/logo.png" alt="JustPizza-logo" className="mb-1" style={{height: 30, width: 30}}/>JustPizza
                 </a>
 
                 <div className="collapse navbar-collapse justify-content-between" id="navbarNav">

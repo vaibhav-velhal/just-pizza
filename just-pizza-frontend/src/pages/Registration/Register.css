@@ -1,5 +1,5 @@
 .registration-page {
-    background: url("./../../../public/pizza-auth-image.jpg") no-repeat center;
+    background: url("/pizza-auth-image.jpg") no-repeat center;
 }
 
 .registration-page .registration-container {

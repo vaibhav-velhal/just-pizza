@@ -9,7 +9,7 @@
 /* header-section */
 .header-container {
     min-height: clamp(450px, 40vw, 550px);
-    background-image: url("./../../../public/pizza-header-image.jpg");
+    background-image: url("/pizza-header-image.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
