@@ -284,8 +284,7 @@ The Bruno collection contains the following modules:
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/user/` | Get all users |
-| GET | `/api/user/:userId` | Get a single user |
+| GET | `/api/user` | Get a single user |
 | PATCH | `/api/user/:userId` | Update user |
 | DELETE | `/api/user/:userId` | Delete a user |
 
