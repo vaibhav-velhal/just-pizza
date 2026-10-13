@@ -3,7 +3,7 @@ import { BsCart3 } from "react-icons/bs";
 import "./Navbar.css";
 
 function Navbar() {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     const navigate = useNavigate();
 
