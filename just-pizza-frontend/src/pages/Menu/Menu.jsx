@@ -6,7 +6,7 @@ import { PiChefHatThin } from "react-icons/pi";
 
 function Menu() {
 
-  const token = JSON.parse(localStorage.getItem("token"));
+  const token = localStorage.getItem("token");
 
   const [selectedCategory, setSelectedCategory] = useState("all");
 

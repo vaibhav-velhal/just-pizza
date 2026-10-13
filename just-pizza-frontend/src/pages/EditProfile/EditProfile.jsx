@@ -11,8 +11,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 function EditProfile() {
 
-    const token = JSON.parse(localStorage.getItem("token"));
-    // const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
 
     const [isLoading, setIsLoading] = useState(false);
     const [firstName, setFirstName] = useState("");

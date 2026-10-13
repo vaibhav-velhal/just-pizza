@@ -11,7 +11,7 @@ import "./Home.css";
 
 function Home() {
     
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
     const [productData, setProductData] = useState([]);
 
 

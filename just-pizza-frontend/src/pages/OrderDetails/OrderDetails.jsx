@@ -9,7 +9,7 @@ function OrderDetails() {
 
     const { orderId } = useParams();
 
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     const [order, setOrder] = useState(null);
     const [orderItems, setOrderItems] = useState([]);

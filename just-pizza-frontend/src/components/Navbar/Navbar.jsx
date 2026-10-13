@@ -4,7 +4,6 @@ import "./Navbar.css";
 
 function Navbar() {
     const token = JSON.parse(localStorage.getItem("token"));
-    // const userId = localStorage.getItem("userId");
 
     const navigate = useNavigate();
 
@@ -14,7 +13,6 @@ function Navbar() {
 
         if(confirmLogout) {
             localStorage.removeItem("token");
-            localStorage.removeItem("userId");
             navigate("/");
         }
     };

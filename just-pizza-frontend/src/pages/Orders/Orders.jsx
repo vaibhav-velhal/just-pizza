@@ -8,7 +8,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 function Orders() {
 
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     const [orders, setOrders] = useState([]);
 

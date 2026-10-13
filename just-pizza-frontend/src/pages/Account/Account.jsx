@@ -13,8 +13,7 @@ import { MdDeleteOutline } from "react-icons/md";
 
 function Account() {
 
-    const token = JSON.parse(localStorage.getItem("token"));
-    // const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
 
     const navigate = useNavigate();
 
@@ -74,7 +73,6 @@ function Account() {
 
         if(confirmLogout) {
             localStorage.removeItem("token");
-            localStorage.removeItem("userId");
             navigate("/");
         }
     };
@@ -90,7 +88,6 @@ function Account() {
                 if(res.msg === "User deleted successfully!") {
                     alert(res.msg);
                     localStorage.removeItem("token");
-                    localStorage.removeItem("userId");
                     navigate("/");
                 }
             } catch(error) {

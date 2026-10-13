@@ -21,8 +21,7 @@ function Login() {
         try {
             const res = await loginUser(email, password);
 
-            localStorage.setItem("token", JSON.stringify(res.token));
-            localStorage.setItem("userId", res.userId);
+            localStorage.setItem("token", res.token);
 
             if(res.token){
                 setEmail("");

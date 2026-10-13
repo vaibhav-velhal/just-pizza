@@ -9,7 +9,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 function Cart() {
 
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     const [cartData, setCartData] = useState(null);
     const [productData, setProductData] = useState([]);
