@@ -9,6 +9,7 @@ function Menu() {
   const token = localStorage.getItem("token");
 
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [isLoading, setIsLoading] = useState(true);
 
   const [productData, setProductData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
@@ -39,6 +40,7 @@ function Menu() {
               const res = await getAllProducts();
               
               setProductData(res);
+              setIsLoading(false);
           } catch (error) {
               console.error(error);
           }
@@ -120,34 +122,60 @@ function Menu() {
               <div className="container menu-section">
                 <div className="row">
                   {
-                    filteredProducts.map((item) => {
-                      return(
-                        <div className="col-6 col-md-3 mb-4" key={item._id}>
-                          <div className="card h-100 shadow-sm border border-opacity-10 rounded-3">
-                            <div className="card-body d-flex flex-column justify-content-between p-0">
-                              <div className="image-container rounded-top-3">
-                                <img src={item.image} alt={item.name} loading="lazy" />
+                    isLoading ? 
+                      (
+                        [...Array(12)].map((_, index) => (
+                          <div className="col-6 col-md-3 mb-4" key={index}>
+                            <div className="card shadow-sm border border-opacity-10 rounded-3" aria-hidden="true">
+                              <div className="placeholder-wave">
+                                  <div
+                                      className="placeholder bg-secondary bg-opacity-25 rounded-top-3 w-100"
+                                      style={{ height: "150px" }}
+                                  ></div>
                               </div>
-                              <div className="pizza-content d-flex justify-content-between align-items-end p-3">
-                                <div className="pizza-desc">
-                                  <p className="fw-semibold mb-1">{item.name}</p>
-                                  <p className="fw-semibold m-0" style={{color: "#df2620"}}>{"\u20B9"} {item.price}</p>
-                                </div>
-                                <div className="add-to-cart-button">
-                                  <button
-                                      className="add-to-cart-btn btn btn-sm btn-danger"
-                                      type="button"
-                                      onClick={() => handleAddToCart(item._id)}
-                                  >
-                                      {"\u002B"}
-                                  </button>
-                                </div>
+                              <div className="card-body">
+                                <h5 className="card-title placeholder-wave">
+                                  <span className="placeholder col-8 bg-secondary bg-opacity-50 rounded"></span>
+                                </h5>
+                                <p className="card-text placeholder-wave d-flex justify-content-between align-items-center">
+                                  <span className="placeholder col-3 bg-secondary bg-opacity-50 rounded" style={{height: 10}}></span>
+                                  <span className="placeholder bg-secondary bg-opacity-50 rounded-2" style={{height: 30, width: 28}}></span>
+                                </p>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        ))
+                      ) :
+                      (
+                        filteredProducts.map((item) => {
+                          return(
+                            <div className="col-6 col-md-3 mb-4" key={item._id}>
+                              <div className="card h-100 shadow-sm border border-opacity-10 rounded-3">
+                                <div className="card-body d-flex flex-column justify-content-between p-0">
+                                  <div className="image-container rounded-top-3">
+                                    <img src={item.image} alt={item.name} loading="lazy" />
+                                  </div>
+                                  <div className="pizza-content d-flex justify-content-between align-items-end p-3">
+                                    <div className="pizza-desc">
+                                      <p className="fw-semibold mb-1">{item.name}</p>
+                                      <p className="fw-semibold m-0" style={{color: "#df2620"}}>{"\u20B9"} {item.price}</p>
+                                    </div>
+                                    <div className="add-to-cart-button">
+                                      <button
+                                          className="add-to-cart-btn btn btn-sm btn-danger"
+                                          type="button"
+                                          onClick={() => handleAddToCart(item._id)}
+                                      >
+                                          {"\u002B"}
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        })
                       )
-                    })
                   }
                 </div>
               </div>
